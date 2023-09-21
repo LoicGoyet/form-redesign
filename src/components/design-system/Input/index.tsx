@@ -1,5 +1,6 @@
 import cc from 'classcat'
 import * as React from 'react'
+import AppendBtn from './compounds/AppendBtn'
 import styles from './styles.module.scss'
 
 export const types = [
@@ -18,13 +19,15 @@ export const types = [
   'week',
 ] as const
 
-type Props = {
+export type Props = {
   className?: string
   value: string | number
   onChange: React.ChangeEventHandler<HTMLInputElement>
   onBlur: React.FocusEventHandler<HTMLInputElement>
   type?: (typeof types)[number]
   id?: string
+  append?: React.ReactNode
+  status?: 'idle' | 'error'
 }
 
 export const Input = ({
@@ -34,15 +37,27 @@ export const Input = ({
   onBlur,
   type = 'text',
   id,
+  append,
+  status = 'idle',
 }: Props) => {
   return (
-    <input
-      type={type}
-      className={cc([className, styles['input']])}
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      id={id}
-    />
+    <div
+      className={cc([className, styles['input'], styles[`input--${status}`]])}
+    >
+      <input
+        className={cc({
+          [styles['input__native']]: true,
+          [styles['input__native--has-append']]: !!append,
+        })}
+        type={type}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        id={id}
+      />
+      {append}
+    </div>
   )
 }
+
+Input.AppendBtn = AppendBtn

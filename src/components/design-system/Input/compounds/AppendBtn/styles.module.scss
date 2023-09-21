@@ -1,0 +1,17 @@
+.btn__append-btn {
+  border-radius: 0;
+  border-top-right-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+  padding: var(--padding);
+  flex-shrink: 0;
+  border: var(--border);
+  border-left: 0;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+
+  &:focus {
+    outline: -webkit-focus-ring-color auto 1px;
+    z-index: 1;
+  }
+}

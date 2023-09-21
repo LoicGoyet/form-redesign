@@ -2,7 +2,7 @@
 import { Field, FieldProps, useField } from 'formik'
 import * as React from 'react'
 import { FormGroup } from '@components/design-system/FormGroup'
-import { Input } from '@components/design-system/Input'
+import PasswordInput from '@components/design-system/PasswordInput'
 import { Error } from '../Error'
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   className?: string
 }
 
-export const TextWidget = ({ name, label, className }: Props) => {
+export const PasswordWidget = ({ name, label, className }: Props) => {
   const [, meta] = useField(name)
   const isError = !!meta.error && meta.touched
 
@@ -19,7 +19,11 @@ export const TextWidget = ({ name, label, className }: Props) => {
     <FormGroup className={className} label={label} name={name}>
       <Field name={name}>
         {({ field }: FieldProps) => (
-          <Input {...field} id={name} status={isError ? 'error' : 'idle'} />
+          <PasswordInput
+            {...field}
+            id={name}
+            status={isError ? 'error' : 'idle'}
+          />
         )}
       </Field>
       <Error name={name} />

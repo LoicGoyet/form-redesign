@@ -1,10 +1,36 @@
 .input {
-  display: block;
-  border: 1px solid #e8ecef;
+  --border-color: #e8ecef;
+  --border: 1px solid var(--border-color);
+  --border-radius: 4px;
+  --padding: 1rem;
+
+  display: flex;
+}
+
+.input--error {
+  --border-color: red;
+}
+
+.input__native {
+  border-radius: var(--border-radius);
+  border: var(--border);
   background-color: #fff;
-  padding: 1rem;
-  width: 100%;
-  border-radius: 4px;
-  overflow: hidden;
+  padding: var(--padding);
   text-overflow: ellipsis;
+  flex-grow: 1;
+  position: relative;
+
+  &:focus {
+    z-index: 1;
+  }
+}
+
+.input--error .input__native {
+  background-color: #feedf4;
+}
+
+.input__native--has-append {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
