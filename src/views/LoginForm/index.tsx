@@ -2,6 +2,7 @@
 
 import * as React from 'react'
 import { PasswordWidget } from '@components/form/PasswordWidget'
+import { SubmitWidget } from '@components/form/SubmitWidget'
 import { TextWidget } from '@components/form/TextWidget'
 import { Form } from '../../components/form/Form'
 
@@ -13,8 +14,10 @@ const initialValue = {
 }
 
 const LoginForm = () => {
-  const handleSubmit = (values: Login) => {
+  const handleSubmit = async (values: Login) => {
     console.log(values)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+    return null
   }
 
   return (
@@ -26,7 +29,7 @@ const LoginForm = () => {
       >
         <TextWidget name="email" label="Email" />
         <PasswordWidget name="password" label="Password" />
-        <button type="submit">Submit</button>
+        <SubmitWidget>Submit</SubmitWidget>
       </Form>
     </div>
   )
