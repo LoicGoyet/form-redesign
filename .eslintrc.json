@@ -41,6 +41,7 @@
     "no-type-assertion/no-type-assertion": "error",
     "prettier/prettier": "error",
     "import/newline-after-import": "error",
+    "@typescript-eslint/no-misused-promises": "off",
     "import/order": [
       "error",
       {
