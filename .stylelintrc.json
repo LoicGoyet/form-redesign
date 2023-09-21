@@ -1,0 +1,14 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "rules": {
+    "color-function-notation": "modern",
+    "alpha-value-notation": "number",
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreProperties": ["font-family", "text-rendering"]
+      }
+    ],
+    "color-no-hex": true
+  }
+}
