@@ -1,7 +1,15 @@
 'use client'
 
-// eslint-disable-next-line import/named
-import { Formik, Form as FormikForm, FormikHelpers, FormikProps } from 'formik'
+import {
+  Formik,
+  // eslint-disable-next-line import/named
+  FormikErrors,
+  Form as FormikForm,
+  // eslint-disable-next-line import/named
+  FormikHelpers,
+  // eslint-disable-next-line import/named
+  FormikProps,
+} from 'formik'
 import { assocPath } from 'ramda'
 import * as React from 'react'
 import z from 'zod'
@@ -15,6 +23,7 @@ type Props<Values extends object> = {
   ) => void | Promise<unknown>
   initialValues: Values
   schema?: z.ZodSchema<Values>
+  validate?: (values: Values) => FormikErrors<Values>
 }
 
 export const Form = <Values extends object>({
@@ -23,6 +32,7 @@ export const Form = <Values extends object>({
   onSubmit,
   initialValues,
   schema,
+  validate = () => ({}),
 }: Props<Values>) => {
   const handleValidate = (values: Values) => {
     let error = {}
@@ -36,7 +46,7 @@ export const Form = <Values extends object>({
         )
     }
 
-    return error
+    return { ...error, ...validate(values) }
   }
 
   return (
