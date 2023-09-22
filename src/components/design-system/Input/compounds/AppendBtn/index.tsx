@@ -13,6 +13,7 @@ const AppendBtn = ({ className, onClick, children }: Props) => {
     <button
       className={cc([styles['btn__append-btn'], className])}
       onClick={onClick}
+      type="button"
     >
       {children}
     </button>
