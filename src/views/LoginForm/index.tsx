@@ -38,10 +38,10 @@ const LoginForm = () => {
         initialValues={initialValue}
         schema={loginSchema}
       >
-        {({ errors, touched }) => (
+        {({ errors, values }) => (
           <>
             <TextWidget name="email" label="Email" />
-            {!errors.email && !!touched.email ? (
+            {!errors.email && !!values.email ? (
               <>
                 <PasswordWidget name="password" label="Password" />
                 <SubmitWidget>Submit</SubmitWidget>
