@@ -69,9 +69,17 @@ const LoginForm = () => {
         initialValues={initialValue}
         schema={loginSchema}
       >
-        <TextWidget name="email" label="Email" />
-        <PasswordWidget name="password" label="Password" />
-        <SubmitWidget>Submit</SubmitWidget>
+        {({ errors, touched }) => (
+          <>
+            <TextWidget name="email" label="Email" />
+            {!errors.email && !!touched.email ? (
+              <>
+                <PasswordWidget name="password" label="Password" />
+                <SubmitWidget>Submit</SubmitWidget>
+              </>
+            ) : null}
+          </>
+        )}
       </Form>
     </div>
   )
