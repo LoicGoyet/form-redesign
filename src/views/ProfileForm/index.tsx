@@ -31,7 +31,6 @@ const serviceFn = async <Values extends object>(
       errors: Partial<Record<keyof Values, string>>
     }
 > => {
-  console.log(values)
   await new Promise((resolve) => setTimeout(resolve, 2000))
 
   const isOk = Math.random() > 0.5
