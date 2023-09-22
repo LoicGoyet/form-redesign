@@ -8,18 +8,13 @@ import { SubmitWidget } from '@components/form/SubmitWidget'
 import { TextWidget } from '@components/form/TextWidget'
 import { Form } from '../../components/form/Form'
 
+import { getProfile } from '../../service/getProfile'
 import { postProfile } from '../../service/postProfile'
 import {
   ProfileForm,
   ProfileForm as ProfileFormType,
   profileFormSchema,
 } from './type'
-
-const initialValue = {
-  email: '',
-  password: '',
-  confirmPassword: '',
-}
 
 const ProfileForm = () => {
   const handleSubmit = async (
@@ -50,7 +45,12 @@ const ProfileForm = () => {
     <div style={{ margin: '2rem auto', maxWidth: '27rem' }}>
       <Form
         onSubmit={handleSubmit}
-        initialValues={initialValue}
+        promiseInitialValues={getProfile()}
+        initialValues={{
+          email: '',
+          password: '',
+          confirmPassword: '',
+        }}
         schema={profileFormSchema}
         validate={validate}
       >

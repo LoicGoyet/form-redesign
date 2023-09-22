@@ -1,5 +1,6 @@
 'use client'
 
+import cc from 'classcat'
 import {
   Formik,
   // eslint-disable-next-line import/named
@@ -13,6 +14,8 @@ import {
 import { assocPath } from 'ramda'
 import * as React from 'react'
 import z from 'zod'
+import styles from './styles.module.scss'
+import { useInitialValue } from './useInitialValue'
 
 type Props<Values extends object> = {
   className?: string
@@ -21,9 +24,10 @@ type Props<Values extends object> = {
     values: Values,
     helpers: FormikHelpers<Values>
   ) => void | Promise<unknown>
-  initialValues: Values
   schema?: z.ZodSchema<Values>
   validate?: (values: Values) => FormikErrors<Values>
+  initialValues: Values
+  promiseInitialValues?: Promise<Values>
 }
 
 export const Form = <Values extends object>({
@@ -31,9 +35,15 @@ export const Form = <Values extends object>({
   children,
   onSubmit,
   initialValues,
+  promiseInitialValues,
   schema,
   validate = () => ({}),
 }: Props<Values>) => {
+  const [initValues, status] = useInitialValue(
+    initialValues,
+    promiseInitialValues
+  )
+
   const handleValidate = (values: Values) => {
     let error = {}
 
@@ -51,12 +61,16 @@ export const Form = <Values extends object>({
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={initValues}
       onSubmit={onSubmit}
       validate={handleValidate}
+      enableReinitialize={true}
     >
       {(formikProps) => (
-        <FormikForm className={className}>
+        <FormikForm
+          className={cc([className, styles[`form--${status}`]])}
+          aria-disabled={status === 'ready'}
+        >
           {typeof children === 'function' ? children(formikProps) : children}
         </FormikForm>
       )}
