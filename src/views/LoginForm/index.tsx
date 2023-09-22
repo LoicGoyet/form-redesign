@@ -8,6 +8,7 @@ import { SubmitWidget } from '@components/form/SubmitWidget'
 import { TextWidget } from '@components/form/TextWidget'
 import { Form } from '../../components/form/Form'
 
+import { postLogin } from '../../service/postLogin'
 import { Login, loginSchema } from './type'
 
 const initialValue = {
@@ -15,44 +16,12 @@ const initialValue = {
   password: '',
 }
 
-const serviceFn = async <Values extends object>(
-  values: Values
-): Promise<
-  | {
-      ok: true
-    }
-  | {
-      ok: false
-      errors: Partial<Record<keyof Values, string>>
-    }
-> => {
-  console.log(values)
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-
-  const isOk = Math.random() > 0.5
-
-  if (isOk) {
-    return { ok: true }
-  }
-
-  return {
-    ok: false,
-    errors: Object.keys(values).reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: 'test',
-      }),
-      {}
-    ),
-  }
-}
-
 const LoginForm = () => {
   const handleSubmit = async (
     values: Login,
     formikHelper: FormikHelpers<Login>
   ) => {
-    const response = await serviceFn(values)
+    const response = await postLogin(values)
 
     if (response.ok) {
       // Then we do whatever we want

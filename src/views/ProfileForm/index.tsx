@@ -8,6 +8,7 @@ import { SubmitWidget } from '@components/form/SubmitWidget'
 import { TextWidget } from '@components/form/TextWidget'
 import { Form } from '../../components/form/Form'
 
+import { postProfile } from '../../service/postProfile'
 import {
   ProfileForm,
   ProfileForm as ProfileFormType,
@@ -20,43 +21,12 @@ const initialValue = {
   confirmPassword: '',
 }
 
-const serviceFn = async <Values extends object>(
-  values: Values
-): Promise<
-  | {
-      ok: true
-    }
-  | {
-      ok: false
-      errors: Partial<Record<keyof Values, string>>
-    }
-> => {
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-
-  const isOk = Math.random() > 0.5
-
-  if (isOk) {
-    return { ok: true }
-  }
-
-  return {
-    ok: false,
-    errors: Object.keys(values).reduce(
-      (acc, key) => ({
-        ...acc,
-        [key]: 'test',
-      }),
-      {}
-    ),
-  }
-}
-
 const ProfileForm = () => {
   const handleSubmit = async (
     values: ProfileFormType,
     formikHelper: FormikHelpers<ProfileFormType>
   ) => {
-    const response = await serviceFn(values)
+    const response = await postProfile(values)
 
     if (response.ok) {
       // Then we do whatever we want
